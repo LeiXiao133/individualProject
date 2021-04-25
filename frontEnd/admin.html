@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="index.css">
+
+<body>
+    <div id="demo">
+        <p>question ID: <input type="text" id="questioNum"></p>
+        <p>question: <input type="text" id="question"></p>
+        <p>choice:</p>
+        <input type="text" id="an1"><br>
+        <input type="text" id="an2"><br>
+        <input type="text" id="an3"><br>
+        <input type="text" id="an4"><br>
+        <p>answer: <input type="text" id="ansKey"></p>
+
+        <button onclick="update()">Update</button>
+        <button onclick="save()">Save</button>
+
+    </div>
+
+    <footer>
+        <div><button><a href="index.html" style="text-decoration: none">Back</a></button></div>
+    </footer>
+
+    <script>
+        var src = "https://leixiao1.com/individualProject";
+
+
+        function update() {
+            let questioNum = document.getElementById('questioNum').value;
+            let question = document.getElementById('question').value;
+            let an1 = document.getElementById('an1').value;
+            let an2 = document.getElementById('an2').value;
+            let an3 = document.getElementById('an3').value;
+            let an4 = document.getElementById('an4').value;
+            let ansKey = document.getElementById('ansKey').value;
+            if (questioNum == "") {
+                alert("Must Input question ID")
+            } else {
+                let currdata = {
+                    questioNum,
+                    question,
+                    an1,
+                    an2,
+                    an3,
+                    an4,
+                    ansKey
+                }
+                let data = JSON.stringify(currdata)
+                const xhttp = new XMLHttpRequest();
+                xhttp.open("PUT", src + "/API/v1/updateQuestion/", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+                xhttp.send(data);
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        location.reload()
+                    }
+                };
+            }
+        }
+
+        function save() {
+            let questioNum = document.getElementById('questioNum').value;
+            let question = document.getElementById('question').value;
+            let an1 = document.getElementById('an1').value;
+            let an2 = document.getElementById('an2').value;
+            let an3 = document.getElementById('an3').value;
+            let an4 = document.getElementById('an4').value;
+            let ansKey = document.getElementById('ansKey').value;
+
+            let data = "?questioNum=" + questioNum +
+                "&question=" + question +
+                "&an1=" + an1 +
+                "&an2=" + an2 +
+                "&an3=" + an3 +
+                "&an4=" + an4 +
+                "&ansKey=" + ansKey;
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("POST", src + "/API/v1/save/" + data, true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            xhttp.send();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    location.reload()
+                }
+            };
+        };
+    </script>
+</body>
+
+</html>

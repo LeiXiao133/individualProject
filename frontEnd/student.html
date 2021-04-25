@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="index.css">
+   
+    <body>
+        <div id="1"></div>
+        <div>
+            <button onclick="submit()">submit</button>
+        </div>
+            
+          <footer>
+            <div><button><a href="index.html" style="text-decoration: none">Back</a></button></div>
+        </footer> 
+        
+        <script>
+            
+            let src="https://leixiao1.com/individualProject";
+            window.onload=quiz();
+            function quiz(){
+                const xhttp = new XMLHttpRequest();
+                xhttp.open("GET",src+"/API/v1/quiz/",true);
+                xhttp.send();
+                xhttp.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.status == 200){
+                        
+                        document.getElementById('1').innerHTML=(this.responseText) ;
+                        
+                        
+                    }
+                };
+               
+            };
+
+           
+        </script>
+    </body>
+</html>
